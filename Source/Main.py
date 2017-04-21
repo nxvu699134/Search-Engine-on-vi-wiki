@@ -17,7 +17,7 @@ def main():
     p = Process();
     if args.query:
         p.Search(True, query=args.query[0]);
-    elif args.file:
+    elif args.queryfile:
         p.Search(False, filename=args.queryfile[0]);
     elif args.build:
         p.Build(args.build[0]);
