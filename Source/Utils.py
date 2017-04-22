@@ -5,21 +5,23 @@ class Utils:
         pass;
 
     @staticmethod
-    def FilenameToURL(filename):
-        return (u"http://" + filename).replace(u"~", u"/").replace(u".txt", u"");
-
-    @staticmethod
-    def URLToFilename(URL):
-        return URL.replace(u"http://", u"").replace(u"/", u"~") + u".txt";
-
-    @staticmethod
     def QueryToFilename(query):
+        """
+        Convert query string to a valid file name for result
+        :param query: query string
+        :return: string, valid file name
+        """
         format = re.compile(r'[\\/*?:"<>|]', re.UNICODE);
         query = format.sub('_', query);
         return query + u".txt";
 
     @staticmethod
     def PrintResult(results):
+        """
+        Print result to console
+        :param results: list, list of results
+        :return: None
+        """
         for i in range(len(results)):
             print "------------- Result %d --------------" % i;
             for content in results[i]:

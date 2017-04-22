@@ -10,6 +10,11 @@ class Reader:
         self.filename = filename;
 
     def Read(self):
+        """
+        Read database file
+        Can read 2 types of file <.txt> or <.zip>
+        :return: list of entries, format of entry is a dict ('url', title', 'description')
+        """
         res = [];
         try:
             name, ext = os.path.splitext(self.filename);
@@ -28,6 +33,7 @@ class Reader:
                             with z.open(filename) as f:
                                 lines = f.readlines();
                                 for line in lines:
+                                    line = line.decode('utf-8')
                                     val = line.split('\t');
                                     res.append(dict(zip(Reader.field, val)));
 
@@ -46,6 +52,12 @@ class QFile:
 
     @staticmethod
     def WriteResult(filename, data):
+        """
+        Write result of search query to file
+        :param filename: name of file result (query string)
+        :param data: result of query
+        :return: None
+        """
         with codecs.open(filename, 'wb', encoding='utf-8') as f:
             for field in data:
                 for content in field:
@@ -54,6 +66,12 @@ class QFile:
 
     @staticmethod
     def ReadQuery(filename):
+        """
+        Read queries from file
+        :param filename: name of query file
+        :return: list, each element in list is a query
+                 None if error
+        """
         try:
             with codecs.open(filename, 'rb', encoding='utf-8') as f:
                 return f.readlines();

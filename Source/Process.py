@@ -5,6 +5,7 @@ from Reader import Reader;
 from Indexer import Indexer;
 from Utils import Utils;
 
+
 class Process:
     NUM_PAGES_PER_THREAD = 5000;
     INDEX_FOLDER = 'indexdir';
@@ -14,6 +15,13 @@ class Process:
         self.entries = [];
 
     def __Readfile(self, filename):
+        """
+        Read file database
+        :param filename: name of data, <.txt> or <.zip>
+        :return:
+            True: if read successfully
+            False: otherwise
+        """
         rd = Reader(filename);
         self.entries = rd.Read();
         if 0 == len(self.entries):
@@ -25,6 +33,11 @@ class Process:
         indexer.Index();
 
     def Build(self, database_filename):
+        """
+        Call _Readfile and _Indexing
+        :param database_filename: name of data base pass to __Readfile(filename)
+        :return: None
+        """
         if not os.path.exists(Process.INDEX_FOLDER):
             os.mkdir(Process.INDEX_FOLDER);
 
@@ -35,8 +48,14 @@ class Process:
                 self.__Indexing();
             print "Done, Building time: %f" % (time.time() - start_time);
 
-    '''mode : True : query with string, file is otherwise'''
     def Search(self, mode, filename=None, query=None):
+        """
+        :param mode: True: search with query string
+                     False: search with file of queries
+        :param filename: string, name of file query, not None if mode is False
+        :param query: string, input query, not None if mode is True,
+        :return: None
+        """
         if not os.path.exists(Process.INDEX_FOLDER) \
                 or not Indexer.Check_exists(Process.INDEX_FOLDER, Process.INDEX_NAME):
             print "Please run : python Main.py --build <DATABASE_FILE>"
